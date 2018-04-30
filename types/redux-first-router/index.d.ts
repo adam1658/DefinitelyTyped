@@ -4,6 +4,7 @@
 //                 viggyfresh <https://github.com/viggyfresh>
 //                 janb87 <https://github.com/janb87>
 //                 corydeppen <https://github.com/corydeppen>
+//                 adam1658 <https://github.com/adam1658>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.4
 
@@ -12,7 +13,9 @@ import {
     Store,
     Reducer,
     Middleware,
-    GenericStoreEnhancer
+    Action as ReduxAction,
+    AnyAction,
+    DeepPartial,
 } from 'redux';
 import { History } from 'history';
 
@@ -233,7 +236,7 @@ export function connectRoutes<TKeys = {}, TState = any>(
         reducer: Reducer<LocationState<TKeys, TState>>;
         middleware: Middleware;
         thunk(store: Store<TState>): Promise<Nullable<RouteThunk<TState>>>;
-        enhancer: GenericStoreEnhancer;
+        enhancer: <A extends ReduxAction = AnyAction>(reducer: Reducer<TState, A>, preloadedState?: DeepPartial<TState>) => Store<TState, A>;
         initialDispatch?(): void;
     };
 

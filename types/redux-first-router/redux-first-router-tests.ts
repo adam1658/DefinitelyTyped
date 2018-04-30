@@ -17,7 +17,6 @@ import {
     Dispatch,
     compose,
     Action,
-    GenericStoreEnhancer,
     StoreEnhancerStoreCreator,
     combineReducers
 } from 'redux';
@@ -33,7 +32,7 @@ interface State {
     location: LocationState<Keys, State>;
     stale: boolean;
 }
-type StoreCreator = StoreEnhancerStoreCreator<State>;
+type StoreCreator = StoreEnhancerStoreCreator;
 
 const routesMap: RoutesMap<Keys, State> = {
     HOME: '/',
@@ -82,7 +81,7 @@ const storeEnhancer = compose<StoreCreator, StoreCreator, StoreCreator>(
     composedMiddleware
 );
 
-const combined = combineReducers<State>({ location: reducer });
+const combined = combineReducers<State>({ location: reducer, stale: (s, a) => true });
 
 const store = createStore(combined, storeEnhancer);
 
